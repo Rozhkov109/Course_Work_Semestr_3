@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Курсова_C__3_Семестр.Properties
+namespace CourseWork.Properties
 {
 
 

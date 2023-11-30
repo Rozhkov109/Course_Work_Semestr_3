@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Курсова_C__3_Семестр
+namespace CourseWork
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml
