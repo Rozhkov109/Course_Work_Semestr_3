@@ -8,9 +8,8 @@ public class MathOperationsWithFunc
     /// <summary>
     /// Отримання проміжних значень з набору точок за допомогою інтерполяції
     /// методу поліномів Лагранжа
-    /// 
     /// </summary>
-    public double InterpolationLagrange(List<Point> PointsList,double X,double eps)
+    private double InterpolationLagrange(List<Point> PointsList,double X,double eps)
     {
         if (PointsList.Any())
         {
@@ -25,8 +24,7 @@ public class MathOperationsWithFunc
                 }
                 result += interpolationTerm;
             }
-            result = Math.Round(result, (int)Math.Log10(1 / eps)); // Округлення до заданої точності
-            return result;
+            return Math.Round(result, (int)Math.Log10(1 / eps)); // Округлення до заданої точності
         }
 
         else
@@ -36,35 +34,36 @@ public class MathOperationsWithFunc
         }
     }
 
-    public double FindMaximumWithDichtomy(double start, double end, List<Point> Fx, List<Point> Gx,  double eps) 
+    public double FindMaximumWithDichtomy(double start, double end, Function Fx, Function Gx, double eps)
     {
-        if (Fx.Any() && Gx.Any())
+        List<Point> F_list = Fx.Points;
+        List<Point> G_list = Gx.Points;
+        if (F_list.Any() && G_list.Any()) // Якщо списки не порожні
         {
             double left = start;
             double right = end;
 
             while (right - left > eps)
             {
-                double mid1 = left + (right - left) / 3;
-                double mid2 = right - (right - left) / 3;
+                double mid = (left + right) / 2;
 
-                double fMid1 = InterpolationLagrange(Fx, mid1, eps);
-                double gMid1 = InterpolationLagrange(Gx, mid1, eps);
-                double funcMid1 = fMid1 - gMid1;
+                double fMid = InterpolationLagrange(F_list, mid, eps);
+                double gMid = InterpolationLagrange(G_list, mid, eps);
+                double funcMid = fMid - gMid;
 
-                double fMid2 = InterpolationLagrange(Fx, mid2, eps);
-                double gMid2 = InterpolationLagrange(Gx, mid2, eps);
-                double funcMid2 = fMid2 - gMid2;
+                double fRight = InterpolationLagrange(F_list, right, eps);
+                double gRight = InterpolationLagrange(G_list, right, eps);
+                double funcRight = fRight - gRight;
 
-                if (funcMid1 < funcMid2)
-                { left = mid1; }
+                if (funcMid < funcRight)
+                { left = mid; }
                 else
-                { right = mid2; }
+                { right = mid; }
             }
 
             double optimalX = (left + right) / 2;
-            double fOptimal = InterpolationLagrange(Fx, optimalX, eps);
-            double gOptimal = InterpolationLagrange(Gx, optimalX, eps);
+            double fOptimal = InterpolationLagrange(F_list, optimalX, eps);
+            double gOptimal = InterpolationLagrange(G_list, optimalX, eps);
 
             return fOptimal - gOptimal;
         }
@@ -74,5 +73,6 @@ public class MathOperationsWithFunc
             return double.NaN;
         }
     }
+
 }
 

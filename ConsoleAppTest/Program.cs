@@ -1,26 +1,43 @@
 ﻿using System;
+using System.Text;
 
 class Program
 {
     static void Main()
-    {
-       Function f = new Function();
-       f.AddPointToEnd(1, 2);
-       f.AddPointToEnd(2, 3);
-       f.AddPointToEnd(3, 5);
-       f.AddPointToEnd(4, 7);
+    {   
+        Console.OutputEncoding = Encoding.UTF8;
 
-       Function g = new Function();
-       g.AddPointToEnd(1, 1);
-       g.AddPointToEnd(2, 2);
-       g.AddPointToEnd(3, 3);
-       g.AddPointToEnd(4, 4);
+        Function f = new Function();
+        f.AddPointToEnd(1, 2);
+        f.AddPointToEnd(2, 3);
+        f.AddPointToEnd(3, 5);
+        f.AddPointToEnd(4, 7);
 
-       MathOperationsWithFunc calc = new MathOperationsWithFunc();
-       Console.WriteLine(calc.FindMaximumWithDichtomy(1, 4, f.GetPointsList(), g.GetPointsList(), 0.1));
+        Function g = new Function();
+        g.AddPointToEnd(1, 1);
+        g.AddPointToEnd(2, 2);
+        g.AddPointToEnd(3, 3);
+        g.AddPointToEnd(4, 4);
 
-        Console.WriteLine(f.ToString());
+        Console.WriteLine("Функція F: \n" + f.ToString());
+        Console.WriteLine("\nФункція G: \n" + g.ToString());
 
+        MathOperationsWithFunc calc = new MathOperationsWithFunc();
+        Console.WriteLine("Максимальне значення F(X) - G(X) = " +
+            calc.FindMaximumWithDichtomy(1, 4, f, g, 0.1));
+
+        Console.WriteLine("--------------------------------------\nСеріалізація у файл test.xml");
+        XML.SerializeFunctionsToXML(f, g, "test.xml");
+        
+        f.ClearList();
+        g.ClearList();
+        Console.WriteLine("\nФункції f та g очищенні від значень");
+
+        Console.WriteLine("--------------------------------------\nДесеріалізація з файлу test.xml");
+        (f, g) = XML.DeserializeFunctionsFromXML("test.xml");
+       
+        Console.WriteLine("\nФункція F: \n" + f.ToString());
+        Console.WriteLine("Функція G: \n" + g.ToString());
     }
 }
 

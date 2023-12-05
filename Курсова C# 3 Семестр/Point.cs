@@ -1,7 +1,14 @@
-﻿public class Point
+﻿using System.Xml.Serialization;
+
+public class Point
 {
-    public double X { get; private set; }
-    public double Y { get; private set; }
+    [XmlElement("X")]
+    public double X { get; set; }
+
+    [XmlElement("Y")]
+    public double Y { get; set; }
+
+    public Point() { }
 
     public Point(double X, double Y)
     {

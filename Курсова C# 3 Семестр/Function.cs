@@ -1,24 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
+
+[Serializable]
 public class Function
 {
-    private List<Point> PointsList;
+    private List<Point> PointsList = new List<Point>();
 
-    public Function()
-    { PointsList = new List<Point>(); }
+    public List<Point> Points
+    { get { return PointsList; } }
 
-    public List<Point> GetPointsList()
-    { return PointsList; }
+    public Function() { }
 
     /// <summary>
     /// Додавання нової точки у кінець списку
     /// </summary>
     public void AddPointToEnd(double X, double Y)
-    {
-        if (PointsList == null) PointsList = new List<Point>();
-        PointsList.Add(new Point(X, Y));
-    }
+    { PointsList.Add(new Point(X, Y)); }
 
     /// <summary>
     /// Видалення останнього елемента списку
