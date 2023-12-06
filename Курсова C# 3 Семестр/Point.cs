@@ -3,17 +3,29 @@
 public class Point
 {
     [XmlElement("X")]
-    public double X { get; set; }
+    private double x;
+
+    public double X
+    { 
+        get { return x; }
+        set { x = value; }
+    }
 
     [XmlElement("Y")]
-    public double Y { get; set; }
+    private double y;
+
+    public double Y
+    { 
+        get { return y; }
+        set { y = value; }
+    }
 
     public Point() { }
 
     public Point(double X, double Y)
     {
-        this.X = X;
-        this.Y = Y;
+        x = X;
+        y = Y;
     }
 
     public override string ToString()

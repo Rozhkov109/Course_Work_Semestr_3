@@ -24,20 +24,27 @@ class Program
 
         MathOperationsWithFunc calc = new MathOperationsWithFunc();
         Console.WriteLine("Максимальне значення F(X) - G(X) = " +
-            calc.FindMaximumWithDichtomy(1, 4, f, g, 0.1));
+            calc.FindMaximum(1, 4, f, g, 0.1));
 
         Console.WriteLine("--------------------------------------\nСеріалізація у файл test.xml");
-        XML.SerializeFunctionsToXML(f, g, "test.xml");
+        XML.SerializeFunctionsToXML(f, g, "..\\..\\..\\TestFiles\\test.xml");
         
         f.ClearList();
         g.ClearList();
         Console.WriteLine("\nФункції f та g очищенні від значень");
 
         Console.WriteLine("--------------------------------------\nДесеріалізація з файлу test.xml");
-        (f, g) = XML.DeserializeFunctionsFromXML("test.xml");
+        (f, g) = XML.DeserializeFunctionsFromXML("..\\..\\..\\TestFiles\\test.xml");
        
         Console.WriteLine("\nФункція F: \n" + f.ToString());
-        Console.WriteLine("Функція G: \n" + g.ToString());
+        Console.WriteLine("\nФункція G: \n" + g.ToString());
+
+        Console.WriteLine("Генерація звіту");
+        ReportPDF reportPDF = new ReportPDF();
+        reportPDF.AddFunctions(f,g);
+
+        reportPDF.GenerateReport("..\\..\\..\\TestFiles\\testPDF.pdf");
+        
     }
 }
 

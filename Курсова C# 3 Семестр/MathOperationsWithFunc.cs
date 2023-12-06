@@ -34,7 +34,14 @@ public class MathOperationsWithFunc
         }
     }
 
-    public double FindMaximumWithDichtomy(double start, double end, Function Fx, Function Gx, double eps)
+    /// <summary>
+    /// Перевіряє фунцкцію F(x) - (Gx) на унімодальність                                             
+    /// </summary>
+    /// <returns>Повертає true, якщо функція унімодальна, інакше false.</returns>
+    private bool IsFunctionUnimodal (Function Fx, Function Gx) 
+    { return Fx.CheckUnimodal() && Gx.CheckUnimodal(); }
+
+    private double FindMaximumWithDichtomy(double start, double end, Function Fx, Function Gx, double eps)
     {
         List<Point> F_list = Fx.Points;
         List<Point> G_list = Gx.Points;
@@ -73,6 +80,23 @@ public class MathOperationsWithFunc
             return double.NaN;
         }
     }
+
+    public double FindMaximum(double start, double end, Function Fx, Function Gx, double eps)
+    {
+       bool isUnimodal = IsFunctionUnimodal(Fx, Gx);
+        if (isUnimodal) 
+        {
+           return FindMaximumWithDichtomy(start,end,Fx,Gx,eps);
+        }
+
+        else
+        {
+            // Інший метод (в розробці)
+            return double.NaN;
+        }
+
+    }
+
 
 }
 

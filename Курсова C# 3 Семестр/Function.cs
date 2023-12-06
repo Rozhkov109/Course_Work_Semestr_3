@@ -7,6 +7,9 @@ using System.Linq;
 public class Function
 {
     private List<Point> PointsList = new List<Point>();
+    private bool isUnimodal;
+    public bool IsUnimodal
+    { get { return isUnimodal; } }
 
     public List<Point> Points
     { get { return PointsList; } }
@@ -42,7 +45,30 @@ public class Function
           result += point.ToString();
           result += "\n";
        }
-       return result;
+       if(CheckUnimodal()) 
+            result += "Унімодальна";
+        else 
+            result += "Не унімодальна";
+        return result;
+    }
+
+    /// <summary>
+    /// Перевіряє фунцкцію на унімодальність                                             
+    /// </summary>
+    /// <returns>Повертає true, якщо функція унімодальна, інакше false.</returns>
+    public bool CheckUnimodal()
+    {
+        bool isDecreasing = PointsList[0].Y > PointsList[1].Y;
+        for (int i = 1; i < PointsList.Count - 1; i++)
+        {
+            bool isCurrentDecreasing = PointsList[i].Y > PointsList[i + 1].Y;
+            if (isCurrentDecreasing != isDecreasing)
+            {
+                // Якщо напрямок зміниться хоча б один раз, то функція не унімодальна!
+                return isUnimodal = false;
+            }
+        }
+        return isUnimodal = true;
     }
 }
 
