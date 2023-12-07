@@ -82,8 +82,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ReportPDF.cs" />
-    <Compile Include="XML.cs" />
+    <Compile Include="Interfaces\IBasicFunction.cs" />
+    <Compile Include="Interfaces\IFileManager.cs" />
+    <Compile Include="Interfaces\IFunctionCalculator.cs" />
+    <Compile Include="Interfaces\IFunctionComponent.cs" />
+    <Compile Include="FunctionWithPointsFileManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,9 +95,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MathOperationsWithFunc.cs" />
+    <Compile Include="FunctionWithPointsCalculator.cs" />
     <Compile Include="Point.cs" />
-    <Compile Include="Function.cs" />
+    <Compile Include="FunctionWithPoints.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -127,5 +130,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

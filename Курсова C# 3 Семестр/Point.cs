@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-public class Point
+public class Point : IFunctionComponent
 {
     [XmlElement("X")]
     private double x;
@@ -28,7 +28,7 @@ public class Point
         y = Y;
     }
 
-    public override string ToString()
+    public string GetInfo()
     { return "X = " + X + "  Y = " + Y; }
 }
 
