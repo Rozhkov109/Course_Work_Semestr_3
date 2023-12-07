@@ -7,16 +7,16 @@
         <Y>2</Y>
       </Point>
       <Point>
-        <X>2</X>
-        <Y>3</Y>
+        <X>-2</X>
+        <Y>-3</Y>
       </Point>
       <Point>
         <X>3</X>
         <Y>5</Y>
       </Point>
       <Point>
-        <X>4</X>
-        <Y>7</Y>
+        <X>-4</X>
+        <Y>-7</Y>
       </Point>
     </PointsList>
   </FunctionWithPoints>

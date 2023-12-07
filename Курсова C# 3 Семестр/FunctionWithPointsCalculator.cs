@@ -35,13 +35,6 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
         }
     }
 
-    /// <summary>
-    /// Перевіряє фунцкцію F(x) - (Gx) на унімодальність                                             
-    /// </summary>
-    /// <returns>Повертає true, якщо функція унімодальна, інакше false.</returns>
-    public bool IsFunctionUnimodal (FunctionWithPoints Fx, FunctionWithPoints Gx) 
-    { return Fx.CheckUnimodal() && Gx.CheckUnimodal(); }
-
 
     /// <summary>
     /// Пошук максимального значення для F(x) - (Gx) на заданому інтервалі із заданою точністю                                         
@@ -49,13 +42,13 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
     /// <returns>Повертає максимальне значення F(x) - (Gx) на заданому інтервалі </returns>
     public double FindMaximum(double start, double end, FunctionWithPoints Fx, FunctionWithPoints Gx, double eps)
     {  
-        if (IsFunctionUnimodal(Fx, Gx)) 
+        if(Fx.CheckUnimodal() && Gx.CheckUnimodal()) 
         {
-           return Fx.FindMaximum(start,end,Fx,eps) - Gx.FindMaximum(start, end, Gx, eps);
+            return Fx.FindMaximum(start, end, Fx, eps) - Gx.FindMaximum(start, end, Gx, eps);
         }
-        else
+        else 
         {
-            // Інший метод (в розробці)
+            Console.WriteLine("Одна з функцій не унімодальна. Пошук максимуму не гарантований.");
             return double.NaN;
         }
     }

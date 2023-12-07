@@ -9,9 +9,9 @@ class Program
 
         FunctionWithPoints f = new FunctionWithPoints();
         f.AddPointToEnd(1, 2);
-        f.AddPointToEnd(2, 3);
+        f.AddPointToEnd(-2, -3);
         f.AddPointToEnd(3, 5);
-        f.AddPointToEnd(4, 7);
+        f.AddPointToEnd(-4, -7);
 
         FunctionWithPoints g = new FunctionWithPoints();
         g.AddPointToEnd(1, 1);

@@ -70,6 +70,11 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
 
     public double FindMaximum(double start, double end, FunctionWithPoints func, double eps)
     {
+        if (!func.IsUnimodal)
+        { 
+            Console.WriteLine("Функція не унімодальна. Пошук максимуму не гарантований.");
+            return double.NaN;
+        }
         List<Point> funcList = func.PointsList;
         if (funcList.Any()) // Якщо список не порожній
         {
@@ -97,7 +102,7 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
         }
         else
         {
-            // Вікно з помилкою у графічному застосунку
+            Console.WriteLine("Список точок порожній.");
             return double.NaN;
         }
     }

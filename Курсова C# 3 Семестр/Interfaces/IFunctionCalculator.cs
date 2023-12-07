@@ -7,12 +7,6 @@ interface IFunctionCalculator<T>
     double Interpolation(T function, double X, double eps);
 
     /// <summary>
-    /// Перевіряє фунцкцію F(x) - (Gx) на унімодальність                                             
-    /// </summary>
-    /// <returns>Повертає true, якщо функція унімодальна, інакше false.</returns>
-    bool IsFunctionUnimodal(T Fx, T Gx);
-
-    /// <summary>
     /// Пошук максимального значення для F(x) - (Gx) на заданому інтервалі із заданою точністю                                         
     /// </summary>
     /// <returns>Повертає максимальне значення F(x) - (Gx) на заданому інтервалі </returns>
