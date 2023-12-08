@@ -30,7 +30,7 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
 
         else
         {
-            Console.WriteLine("Помилка! Недостатня кількість точок для інтерполяції");
+            ErrorManager.PrintError("Помилка! Недостатня кількість точок для інтерполяції");
             return double.NaN;
         }
     }
@@ -42,13 +42,13 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
     /// <returns>Повертає максимальне значення F(x) - (Gx) на заданому інтервалі </returns>
     public double FindMaximum(double start, double end, FunctionWithPoints Fx, FunctionWithPoints Gx, double eps)
     {  
-        if(Fx.CheckUnimodal() && Gx.CheckUnimodal()) 
+        if(Fx.IsUnimodal && Gx.IsUnimodal) 
         {
             return Fx.FindMaximum(start, end, Fx, eps) - Gx.FindMaximum(start, end, Gx, eps);
         }
         else 
         {
-            Console.WriteLine("Одна з функцій не унімодальна. Пошук максимуму не гарантований.");
+            ErrorManager.PrintError("Одна з функцій не унімодальна. Пошук максимуму не гарантований.");
             return double.NaN;
         }
     }

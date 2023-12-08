@@ -7,12 +7,17 @@ using System.Linq;
 public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
 {
     private List<Point> pointsList = new List<Point>();
+
     private bool isUnimodal;
     public bool IsUnimodal
-    { get { return isUnimodal; } }
+    { 
+        get { return isUnimodal; } 
+    }
 
     public List<Point> PointsList
-    { get { return pointsList; } }
+    { 
+        get { return pointsList; } 
+    }
 
     public FunctionWithPoints() { }
 
@@ -79,7 +84,7 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
         }
         else
         {
-            Console.WriteLine("Помилка! Недостатня кількість точок для перевірки на унімодальність");
+            ErrorManager.PrintError("Помилка! Недостатня кількість точок для перевірки на унімодальність");
             return isUnimodal = false;
         }
     }
@@ -87,8 +92,8 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
     public double FindMaximum(double start, double end, FunctionWithPoints func, double eps)
     {
         if (!func.IsUnimodal)
-        { 
-            Console.WriteLine("Функція не унімодальна. Пошук максимуму не гарантований.");
+        {
+            ErrorManager.PrintError("Функція не унімодальна. Пошук максимуму не гарантований.");
             return double.NaN;
         }
         List<Point> funcList = func.PointsList;
@@ -118,7 +123,7 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
         }
         else
         {
-            Console.WriteLine("Помилка! Недостатня кількість точок для інтерполяції");
+            ErrorManager.PrintError("Помилка! Недостатня кількість точок для інтерполяції");
             return double.NaN;
         }
     }
