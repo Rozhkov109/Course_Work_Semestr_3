@@ -5,8 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CourseWork"
         mc:Ignorable="d"
-        Title="Пошук максимуму функції" Height="450" Width="800">
-    <Grid>
-        
+        Title="Пошук максимуму функції" Height="600" Width="800">
+    <Grid Background="BurlyWood">
+        <!-- Меню -->
+        <Menu Height="19" VerticalAlignment="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Завантажити з XML" />
+                <MenuItem Header="Зберегти дані в XML" />
+            </MenuItem>
+            <MenuItem Header="Про застосунок"/>
+        </Menu>
+
+
+        <!-- Таблица для F(X) -->
+        <DataGrid Name="FxDataGrid" AutoGenerateColumns="True" CanUserAddRows="True" Margin="10,166,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="248">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="X" Binding="{Binding X}" Width="100" />
+                <DataGridTextColumn Header="Y" Binding="{Binding Y}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Додати Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="38,427,0,0" Click="FxAddPoint_Click" RenderTransformOrigin="0.469,2.481"/>
+        <Button Content="Видалити Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="38,470,0,0" Click="FxRemovePoint_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="96,136,0,0" VerticalAlignment="Top" Height="25" Width="34" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" RenderTransformOrigin="-0.251,0.61"><Run Text="F(x)"/><LineBreak/><Run/></TextBlock>
+
+        <!-- Таблица для G(X) -->
+        <DataGrid Name="GxDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="265,166,0,0" Height="248">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="X" Binding="{Binding X}" Width="100" />
+                <DataGridTextColumn Header="Y" Binding="{Binding Y}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Додати Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="293,427,0,0" Click="GxAddPoint_Click"/>
+        <Button Content="Видалити Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="293,470,0,0" Click="GxAddPoint_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="348,136,0,0" VerticalAlignment="Top" Height="25" Width="40" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" RenderTransformOrigin="-0.251,0.61"><Run Text="G(x)"/><LineBreak/><Run/></TextBlock>
+
+        <!-- Поля для введення даних для обчислення -->
+        <Label Content="Початок інтервалу" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="505,190,0,0" Height="27" Width="140" Cursor="AppStarting" FontSize="14" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="StartTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="650,195,0,0" Width="95" RenderTransformOrigin="0.61,3.833" Height="22" TextChanged="EnterNumbersToTextBox" FontSize="14"/>
+        <Label Content="Кінець інтервалу" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="505,230,0,0" Height="27" Width="140" Cursor="AppStarting" FontSize="14" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="EndTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="650,235,0,0" Width="95" RenderTransformOrigin="0.61,3.833" Height="22" TextChanged="EnterNumbersToTextBox" FontSize="14"/>
+        <Label Content="Точність обчислень" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="505,268,0,0" Height="27" Width="140" Cursor="AppStarting" FontSize="14" HorizontalContentAlignment="Right"/>
+        <TextBox Name="EpsTextBox" Text="0.001" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="650,273,0,0" Width="95" RenderTransformOrigin="0.61,3.833" Height="22" TextChanged="EnterNumbersToEpsTextBox" FontSize="14"/>
+
+
+
+        <Button Content="Знайти максимум" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Click="FindMaximumButton_Click" Margin="595,442,0,0"/>
+        <Label Content="Результат" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="575,401,0,0" Height="26" Width="82" Cursor="AppStarting" FontSize="14" HorizontalContentAlignment="Right"/>
+        <TextBox x:Name="AnswerTextBox" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="662,404,0,0" Width="96" RenderTransformOrigin="0.61,3.833" Height="22" TextChanged="EnterNumbersToTextBox" FontSize="14"/>
+
+
+
+
+
     </Grid>
 </Window>
