@@ -52,20 +52,36 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
         return result;
     }
 
-
     public bool CheckUnimodal()
     {
-        bool isDecreasing = pointsList[0].Y > pointsList[1].Y;
-        for (int i = 1; i < pointsList.Count - 1; i++)
+        if(PointsList.Count >= 2)
         {
-            bool isCurrentDecreasing = pointsList[i].Y > pointsList[i + 1].Y;
-            if (isCurrentDecreasing != isDecreasing)
+            int counter = 0;
+
+            for (int i = 0; i < PointsList.Count - 2; i++)
             {
-                // Якщо напрямок зміниться хоча б один раз, то функція не унімодальна!
-                return isUnimodal = false;
+                if (PointsList[i].Y == PointsList[i + 1].Y) continue; // Якщо Y однакові, пропускаємо цикл
+                bool isDecreasing = PointsList[i].Y > PointsList[i + 1].Y;
+
+
+                bool isCurrentDecreasing = PointsList[i + 1].Y > PointsList[i + 2].Y;
+                if (isCurrentDecreasing != isDecreasing)
+                {
+                    counter++;
+                    if (counter > 1)
+                    {
+                        // Якщо напрямок зміниться більше одного разу, то функція не унімодальна!
+                        return isUnimodal = false;
+                    }
+                }
             }
+            return isUnimodal = true;
         }
-        return isUnimodal = true;
+        else
+        {
+            Console.WriteLine("Помилка! Недостатня кількість точок для перевірки на унімодальність");
+            return isUnimodal = false;
+        }
     }
 
     public double FindMaximum(double start, double end, FunctionWithPoints func, double eps)
@@ -76,7 +92,7 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
             return double.NaN;
         }
         List<Point> funcList = func.PointsList;
-        if (funcList.Any()) // Якщо список не порожній
+        if (funcList.Count() >= 2) // Якщо список має хоча б дві точки
         {
             FunctionWithPointsCalculator calc = new FunctionWithPointsCalculator();
             double left = start;
@@ -102,7 +118,7 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
         }
         else
         {
-            Console.WriteLine("Список точок порожній.");
+            Console.WriteLine("Помилка! Недостатня кількість точок для інтерполяції");
             return double.NaN;
         }
     }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
+using System;
 
 public class FunctionWithPointsFileManager : IFileManager<FunctionWithPoints>
 {
@@ -48,14 +49,28 @@ public class FunctionWithPointsFileManager : IFileManager<FunctionWithPoints>
 
     public (FunctionWithPoints, FunctionWithPoints) DeserializeFunctionsFromXML(string pathToLoad)
     {
-        XmlSerializer serializer = new XmlSerializer(typeof(List<FunctionWithPoints>));
-
-        using (TextReader reader = new StreamReader(pathToLoad))
+        if (File.Exists(pathToLoad))
         {
-            List<FunctionWithPoints> funcList = (List<FunctionWithPoints>)serializer.Deserialize(reader);
-            FunctionWithPoints F = funcList[0];
-            FunctionWithPoints G = funcList[1];
-            return (F, G);
+            XmlSerializer serializer = new XmlSerializer(typeof(List<FunctionWithPoints>));
+
+            using (TextReader reader = new StreamReader(pathToLoad))
+            {
+                List<FunctionWithPoints> functionContainer = (List<FunctionWithPoints>)serializer.Deserialize(reader);
+                if (functionContainer.Count == 2)
+                {
+                    FunctionWithPoints F = functionContainer[0];
+                    FunctionWithPoints G = functionContainer[1];
+                    return (F, G);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Файл повинен містити дві функції.");
+                }
+            }
+        }
+        else
+        {
+            throw new FileNotFoundException("Файл не існує.", pathToLoad);
         }
     }
 }

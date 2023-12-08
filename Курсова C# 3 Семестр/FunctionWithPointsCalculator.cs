@@ -12,7 +12,7 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
     public double Interpolation(FunctionWithPoints function,double X,double eps)
     {
         List<Point> PointsList = function.PointsList;
-        if (PointsList.Any())
+        if (PointsList.Count() >= 2)
         {
             double result = 0;
             foreach (Point point in PointsList)
@@ -20,7 +20,7 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
                 double interpolationTerm = point.Y; // Вираз для обчислення поліному (Y * basicPolinom)
                 foreach (Point otherPoint in PointsList)
                 {
-                    if (point != otherPoint) // Не можна проводити обчислення для коренів з однаковими індексами!!!
+                    if (point.X != otherPoint.X) // Не можна проводити обчислення для коренів з однаковими значеннями!!!
                     { interpolationTerm *= (X - otherPoint.X) / (point.X - otherPoint.X); }
                 }
                 result += interpolationTerm;
@@ -30,7 +30,7 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
 
         else
         {
-            // Вікно з помилкою у графічному застосунку
+            Console.WriteLine("Помилка! Недостатня кількість точок для інтерполяції");
             return double.NaN;
         }
     }
