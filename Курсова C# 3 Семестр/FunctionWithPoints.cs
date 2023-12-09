@@ -8,16 +8,7 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
 {
     private List<Point> pointsList = new List<Point>();
 
-    private bool isUnimodal;
-    public bool IsUnimodal
-    { 
-        get { return isUnimodal; } 
-    }
-
-    public List<Point> PointsList
-    { 
-        get { return pointsList; } 
-    }
+    public List<Point> PointsList { get { return pointsList; } }
 
     public FunctionWithPoints() { }
 
@@ -50,83 +41,39 @@ public class FunctionWithPoints : IBasicFunction<FunctionWithPoints>
           result += point.GetInfo();
           result += "\n";
        }
-       if(CheckUnimodal()) 
-            result += "Унімодальна";
-        else 
-            result += "Не унімодальна";
         return result;
     }
 
-    public bool CheckUnimodal()
+
+
+    /// <summary>
+    /// Отримання проміжних значень з набору точок за допомогою інтерполяції
+    /// методу поліномів Лагранжа
+    /// </summary>
+    public double Interpolation(double X, double eps)
     {
-        if(PointsList.Count >= 2)
+        if (PointsList.Count() >= 2)
         {
-            int counter = 0;
-
-            for (int i = 0; i < PointsList.Count - 2; i++)
+            double result = 0;
+            foreach (Point point in PointsList)
             {
-                if (PointsList[i].Y == PointsList[i + 1].Y) continue; // Якщо Y однакові, пропускаємо цикл
-                bool isDecreasing = PointsList[i].Y > PointsList[i + 1].Y;
-
-
-                bool isCurrentDecreasing = PointsList[i + 1].Y > PointsList[i + 2].Y;
-                if (isCurrentDecreasing != isDecreasing)
+                double interpolationTerm = point.Y; // Вираз для обчислення поліному (Y * basicPolinom)
+                foreach (Point otherPoint in PointsList)
                 {
-                    counter++;
-                    if (counter > 1)
-                    {
-                        // Якщо напрямок зміниться більше одного разу, то функція не унімодальна!
-                        return isUnimodal = false;
-                    }
+                    if (point.X != otherPoint.X) // Не можна проводити обчислення для коренів з однаковими значеннями!!!
+                    { interpolationTerm *= (X - otherPoint.X) / (point.X - otherPoint.X); }
                 }
+                result += interpolationTerm;
             }
-            return isUnimodal = true;
+            return Math.Round(result, (int)Math.Log10(1 / eps)); // Округлення до заданої точності
         }
         else
         {
-            ErrorManager.PrintError("Помилка! Недостатня кількість точок для перевірки на унімодальність");
-            return isUnimodal = false;
-        }
-    }
-
-    public double FindMaximum(double start, double end, FunctionWithPoints func, double eps)
-    {
-        if (!func.IsUnimodal)
-        {
-            ErrorManager.PrintError("Функція не унімодальна. Пошук максимуму не гарантований.");
-            return double.NaN;
-        }
-        List<Point> funcList = func.PointsList;
-        if (funcList.Count() >= 2) // Якщо список має хоча б дві точки
-        {
-            FunctionWithPointsCalculator calc = new FunctionWithPointsCalculator();
-            double left = start;
-            double right = end;
-
-            while (right - left > eps)
-            {
-                double mid = (left + right) / 2;
-
-                double fMid = calc.Interpolation(func, mid, eps);
-                double fRight = calc.Interpolation(func, right, eps);
-
-                if (fMid < fRight)
-                { left = mid; }
-                else
-                { right = mid; }
-            }
-
-            double optimalX = (left + right) / 2;
-            double fOptimal = calc.Interpolation(func, optimalX, eps);
-
-            return fOptimal;
-        }
-        else
-        {
-            ErrorManager.PrintError("Помилка! Недостатня кількість точок для інтерполяції");
+            ErrorManager.PrintError("Помиуцулка! Недостатня кількість точок для інтерполяції");
             return double.NaN;
         }
     }
+
 }
 
 

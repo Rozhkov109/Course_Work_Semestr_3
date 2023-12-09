@@ -6,53 +6,84 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
 {
 
     /// <summary>
-    /// Отримання проміжних значень з набору точок за допомогою інтерполяції
-    /// методу поліномів Лагранжа
-    /// </summary>
-    public double Interpolation(FunctionWithPoints function,double X,double eps)
-    {
-        List<Point> PointsList = function.PointsList;
-        if (PointsList.Count() >= 2)
-        {
-            double result = 0;
-            foreach (Point point in PointsList)
-            {
-                double interpolationTerm = point.Y; // Вираз для обчислення поліному (Y * basicPolinom)
-                foreach (Point otherPoint in PointsList)
-                {
-                    if (point.X != otherPoint.X) // Не можна проводити обчислення для коренів з однаковими значеннями!!!
-                    { interpolationTerm *= (X - otherPoint.X) / (point.X - otherPoint.X); }
-                }
-                result += interpolationTerm;
-            }
-            return Math.Round(result, (int)Math.Log10(1 / eps)); // Округлення до заданої точності
-        }
-
-        else
-        {
-            ErrorManager.PrintError("Помилка! Недостатня кількість точок для інтерполяції");
-            return double.NaN;
-        }
-    }
-
-
-    /// <summary>
     /// Пошук максимального значення для F(x) - (Gx) на заданому інтервалі із заданою точністю                                         
     /// </summary>
     /// <returns>Повертає максимальне значення F(x) - (Gx) на заданому інтервалі </returns>
     public double FindMaximum(double start, double end, FunctionWithPoints Fx, FunctionWithPoints Gx, double eps)
-    {  
-        if(Fx.CheckUnimodal() && Gx.CheckUnimodal()) 
+    {
+        if (!CheckUnimodal(Fx, Gx))
         {
-            return Fx.FindMaximum(start, end, Fx, eps) - Gx.FindMaximum(start, end, Gx, eps);
+            ErrorManager.PrintError("Помилка! Функція F(x) - G(x) не унімодальна. Точний пошук максимуму неможливий.");
+            return double.NaN;
         }
-        else 
+
+        if (Fx.PointsList.Count >= 2 && Gx.PointsList.Count >= 2) // Якщо функції мають хоча б дві точки
         {
-            ErrorManager.PrintError("Одна з функцій не унімодальна. Пошук максимуму не гарантований.");
+            double left = start;
+            double right = end;
+
+            while (right - left > eps)
+            {
+                double mid = (left + right) / 2;
+
+                double fMid = Fx.Interpolation(mid, eps) - Gx.Interpolation(mid,eps);
+                double fRight = Fx.Interpolation(right, eps) - Gx.Interpolation(right,eps);
+
+                if (fMid < fRight) // Якщо права частина більше, ліва стає серединою проміжку
+                { left = mid; }
+                else
+                { right = mid; }
+            }
+
+            double optimalX = (left + right) / 2;
+            double fOptimal = Fx.Interpolation(optimalX, eps) - Gx.Interpolation(optimalX, eps);
+
+            return fOptimal;
+        }
+
+        else
+        {
+            ErrorManager.PrintError("Помилка! Принаймні одна функція містить менше 2 точок!");
             return double.NaN;
         }
     }
 
 
+
+    /// <summary>
+    /// Перевірка на унімодальність функції F(x) - (Gx)                                      
+    /// </summary>
+    /// <returns>true, якщо функція F(x) - (Gx) унімодальна, інакше - false</returns>
+    public bool CheckUnimodal(FunctionWithPoints Fx, FunctionWithPoints Gx)
+    {       
+        int counter = 0;
+        int minPointsCount = Math.Min(Fx.PointsList.Count, Gx.PointsList.Count);
+
+        for (int i = 0; i < minPointsCount - 2; i++)
+        {                       
+            if (Fx.PointsList[i].Y - Gx.PointsList[i].Y == Fx.PointsList[i + 1].Y - Gx.PointsList[i + 1].Y)
+                continue; // Якщо Y однакові для обох функцій, пропускаємо цикл
+
+            bool isCurrentPointIncreasing = Fx.PointsList[i].Y - Gx.PointsList[i].Y <
+                Fx.PointsList[i + 1].Y - Gx.PointsList[i + 1].Y;
+
+
+            bool isNextPointIncreasing = Fx.PointsList[i + 1].Y - Gx.PointsList[i + 1].Y <
+                Fx.PointsList[i + 2].Y - Gx.PointsList[i + 2].Y; ;
+
+            if (isNextPointIncreasing != isCurrentPointIncreasing)
+            {
+                counter++;
+                if (counter > 1)
+                {
+                    // Якщо напрямок зміниться більше одного разу, то функція не унімодальна!
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }
+
 

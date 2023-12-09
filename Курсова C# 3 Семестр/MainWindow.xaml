@@ -18,7 +18,7 @@
         </Menu>
 
 
-        <!-- Таблица для F(X) -->
+        <!-- Таблиця для F(X) -->
         <DataGrid Name="FxDataGrid" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" Margin="10,166,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="248">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="X" Binding="{Binding X}" IsReadOnly="False" Width="100" />
@@ -29,7 +29,7 @@
         <Button Content="Видалити Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="38,470,0,0" Click="FxRemovePoint_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="96,136,0,0" VerticalAlignment="Top" Height="25" Width="34" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" RenderTransformOrigin="-0.251,0.61"><Run Text="F(x)"/><LineBreak/><Run/></TextBlock>
 
-        <!-- Таблица для G(X) -->
+        <!-- Таблиця для G(X) -->
         <DataGrid Name="GxDataGrid" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="265,166,0,0" Height="248">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="X" Binding="{Binding X}" IsReadOnly="False" Width="100" />

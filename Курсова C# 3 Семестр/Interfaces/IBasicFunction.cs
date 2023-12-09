@@ -3,17 +3,12 @@
 /// </summary>
 interface IBasicFunction<T>
 {
-    /// <summary>
-    /// Перевіряє фунцкцію на унімодальність                                             
-    /// </summary>
-    /// <returns>Повертає true, якщо функція унімодальна, інакше false.</returns>
-    bool CheckUnimodal();
 
     /// <summary>
-    /// Знаходить максимум функції на заданому інтервалі за заданим розробником алгоритмом                                        
+    /// Отримання проміжних значень функції за допомогою інтерполяції
     /// </summary>
-    /// <returns>Повертає максимальне значення фукнції на інтервалі</returns>
-    double FindMaximum(double start, double end, T function, double eps);
+    double Interpolation(double X, double eps);
+
 
     /// <summary>
     /// Виведення інформації про функцію у консоль                                     

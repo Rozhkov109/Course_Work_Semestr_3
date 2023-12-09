@@ -9,13 +9,13 @@ namespace CourseWork
 {
     public partial class Graph : Window
     {
-        public Graph(FunctionWithPoints Fx, FunctionWithPoints Gx, double eps)
+        public Graph(FunctionWithPoints Fx, FunctionWithPoints Gx,double start, double end, double eps)
         {
             InitializeComponent();
-            CreateGraph(Fx, Gx, eps);
+            CreateGraph(Fx, Gx, start, end, eps);
         }
 
-        void CreateGraph(FunctionWithPoints Fx, FunctionWithPoints Gx, double eps)
+        void CreateGraph(FunctionWithPoints Fx, FunctionWithPoints Gx,double start,double end, double eps)
         {
             // PlotModel для відображення графіку
             PlotModel model = new PlotModel();
@@ -24,28 +24,18 @@ namespace CourseWork
             LineSeries seriesGx = new LineSeries { Title = "G(x)" };
             LineSeries seriesDiff = new LineSeries { Title = "F(x) - G(x)" };
 
-            FunctionWithPointsCalculator calc = new FunctionWithPointsCalculator();
-
             double maxPoints = Math.Max(Fx.PointsList.Count, Gx.PointsList.Count);
             double step = 1.0 / (maxPoints * 100);
 
-            double minXFx = Fx.PointsList.Min(p => p.X);
-            double maxXFx = Fx.PointsList.Max(p => p.X);
-
-
-            double minXGx = Gx.PointsList.Min(p => p.X);
-            double maxXGx = Gx.PointsList.Max(p => p.X);
-
-
-            for (double x = minXFx; x <= maxXFx; x += step)
+            for (double x = start; x <= end; x += step)
             {
-                double interpolatedValueFx = calc.Interpolation(Fx, x, eps);
+                double interpolatedValueFx = Fx.Interpolation(x, eps);
                 seriesFx.Points.Add(new DataPoint(x, interpolatedValueFx));
             }
 
-            for (double x = minXGx; x <= maxXGx; x +=  step )
+            for (double x = start; x <= end; x +=  step )
             {
-                double interpolatedValueGx = calc.Interpolation(Gx, x, eps);
+                double interpolatedValueGx = Gx.Interpolation(x, eps);
                 seriesGx.Points.Add(new DataPoint(x, interpolatedValueGx));
             }
 

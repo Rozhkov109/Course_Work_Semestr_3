@@ -3,56 +3,40 @@
   <FunctionWithPoints>
     <PointsList>
       <Point>
-        <X>1</X>
-        <Y>5</Y>
+        <X>7</X>
+        <Y>20</Y>
       </Point>
       <Point>
-        <X>2</X>
-        <Y>5</Y>
+        <X>10</X>
+        <Y>12</Y>
       </Point>
       <Point>
-        <X>3</X>
-        <Y>5</Y>
+        <X>15</X>
+        <Y>7</Y>
       </Point>
       <Point>
-        <X>4</X>
-        <Y>5</Y>
-      </Point>
-      <Point>
-        <X>5</X>
-        <Y>8</Y>
-      </Point>
-      <Point>
-        <X>6</X>
-        <Y>12.1</Y>
+        <X>20</X>
+        <Y>2</Y>
       </Point>
     </PointsList>
   </FunctionWithPoints>
   <FunctionWithPoints>
     <PointsList>
       <Point>
-        <X>1</X>
-        <Y>2</Y>
+        <X>7</X>
+        <Y>6.5</Y>
       </Point>
       <Point>
-        <X>2</X>
-        <Y>2</Y>
-      </Point>
-      <Point>
-        <X>3</X>
-        <Y>2</Y>
-      </Point>
-      <Point>
-        <X>4</X>
-        <Y>6</Y>
-      </Point>
-      <Point>
-        <X>3</X>
-        <Y>7.3</Y>
-      </Point>
-      <Point>
-        <X>4</X>
+        <X>10</X>
         <Y>10</Y>
+      </Point>
+      <Point>
+        <X>15</X>
+        <Y>5</Y>
+      </Point>
+      <Point>
+        <X>20</X>
+        <Y>1</Y>
       </Point>
     </PointsList>
   </FunctionWithPoints>

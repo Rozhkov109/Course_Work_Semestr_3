@@ -4,31 +4,19 @@
     <PointsList>
       <Point>
         <X>1</X>
-        <Y>-3.2</Y>
+        <Y>10</Y>
       </Point>
       <Point>
         <X>2</X>
-        <Y>-7</Y>
+        <Y>100</Y>
       </Point>
       <Point>
         <X>3</X>
-        <Y>-10</Y>
+        <Y>10</Y>
       </Point>
       <Point>
         <X>4</X>
-        <Y>-12.5</Y>
-      </Point>
-      <Point>
-        <X>5</X>
-        <Y>-13</Y>
-      </Point>
-      <Point>
-        <X>6</X>
-        <Y>-15.2</Y>
-      </Point>
-      <Point>
-        <X>7</X>
-        <Y>-16</Y>
+        <Y>100</Y>
       </Point>
     </PointsList>
   </FunctionWithPoints>
@@ -36,31 +24,19 @@
     <PointsList>
       <Point>
         <X>1</X>
-        <Y>4</Y>
+        <Y>50</Y>
       </Point>
       <Point>
         <X>2</X>
-        <Y>-2.58</Y>
+        <Y>5</Y>
       </Point>
       <Point>
         <X>3</X>
-        <Y>-4</Y>
+        <Y>50</Y>
       </Point>
       <Point>
         <X>4</X>
-        <Y>-6.3</Y>
-      </Point>
-      <Point>
-        <X>5</X>
-        <Y>-8</Y>
-      </Point>
-      <Point>
-        <X>6</X>
-        <Y>-10.25</Y>
-      </Point>
-      <Point>
-        <X>7</X>
-        <Y>-12</Y>
+        <Y>5</Y>
       </Point>
     </PointsList>
   </FunctionWithPoints>

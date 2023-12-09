@@ -134,34 +134,29 @@ namespace CourseWork
 
         private void MenuItem_GeneratePDF_Click(object sender, RoutedEventArgs e)
         {
-            // Создаем диалоговое окно сохранения файла
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            // Устанавливаем фильтр для файлов PDF
+
             saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*";
 
-            // Открываем диалоговое окно и проверяем результат
+
             if (saveFileDialog.ShowDialog() == true)
             {
-                // Получаем путь к выбранному файлу
+
                 string filePath = saveFileDialog.FileName;
 
-                // Создаем объект FunctionWithPointsFileManager
                 FunctionWithPointsFileManager fileManager = new FunctionWithPointsFileManager();
 
-                // Создаем объект FunctionWithPoints и добавляем в него данные из таблицы
                 FunctionWithPoints Fx = new FunctionWithPoints();
                 FunctionWithPoints Gx = new FunctionWithPoints();
 
-                // Считываем данные из таблицы
                 List<Point> fxPoints = fxPointsCollection.ToList();
                 List<Point> gxPoints = gxPointsCollection.ToList();
 
-                // Добавляем точки в объекты Fx и Gx
                 fxPoints.ForEach(point => Fx.AddPointToEnd(point.X, point.Y));
                 gxPoints.ForEach(point => Gx.AddPointToEnd(point.X, point.Y));
 
-                // Создаем объект PDFGenerator и генерируем PDF-отчет
                 FunctionWithPointsFileManager pdfGenerator = new FunctionWithPointsFileManager();
                 pdfGenerator.GeneratePDFReport (
                     Fx, 
@@ -230,51 +225,62 @@ namespace CourseWork
                 {
                     // Не дозволяємо запис
                     textBox.Text = string.Concat(newText.Where(c => char.IsDigit(c) || c == '.'));
-                    textBox.CaretIndex = textBox.Text.Length; // установить каретку в конец текста
+                    textBox.CaretIndex = textBox.Text.Length;
                 }
             }
         }
 
         private void FindMaximumButton_Click(object sender, RoutedEventArgs e)
         {
+            AnswerTextBox.Clear();
             FunctionWithPoints Fx = new FunctionWithPoints();
             FunctionWithPoints Gx = new FunctionWithPoints();
 
             List<Point> fxPoints = fxPointsCollection.ToList();
             List<Point> gxPoints = gxPointsCollection.ToList();
 
-            fxPoints.ForEach(point => Fx.AddPointToEnd(point.X, point.Y));
-            gxPoints.ForEach(point => Gx.AddPointToEnd(point.X, point.Y));
-
-
-            if (double.TryParse(StartTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double start) &&
-                double.TryParse(EndTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double end) &&
-                double.TryParse(EpsTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double eps))
+            if(fxPoints.Count >= 2 && gxPoints.Count >= 2) 
             {
+                fxPoints.ForEach(point => Fx.AddPointToEnd(point.X, point.Y));
+                gxPoints.ForEach(point => Gx.AddPointToEnd(point.X, point.Y));
 
-                if (!string.IsNullOrWhiteSpace(StartTextBox.Text) &&
-                    !string.IsNullOrWhiteSpace(EndTextBox.Text) &&
-                    !string.IsNullOrWhiteSpace(EpsTextBox.Text))
+
+                if (double.TryParse(StartTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double start) &&
+                    double.TryParse(EndTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double end) &&
+                    double.TryParse(EpsTextBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out double eps))
                 {
-                    FunctionWithPointsCalculator calc = new FunctionWithPointsCalculator();
-                    double result = calc.FindMaximum(start,end,Fx, Gx,eps);
 
-                    if(Fx.IsUnimodal && Gx.IsUnimodal) 
+                    if (!string.IsNullOrWhiteSpace(StartTextBox.Text) &&
+                        !string.IsNullOrWhiteSpace(EndTextBox.Text) &&
+                        !string.IsNullOrWhiteSpace(EpsTextBox.Text))
                     {
-                        AnswerTextBox.Text = result.ToString(CultureInfo.InvariantCulture);
-                        Graph graphWindow = new Graph(Fx, Gx, eps);
-                        graphWindow.Show();
+                        FunctionWithPointsCalculator calc = new FunctionWithPointsCalculator();
+
+                        double result = calc.FindMaximum(start, end, Fx, Gx, eps);
+
+                        if (calc.CheckUnimodal(Fx, Gx))
+                        {
+                            AnswerTextBox.Text = result.ToString(CultureInfo.InvariantCulture);
+                            Graph graphWindow = new Graph(Fx, Gx, start, end, eps);
+                            graphWindow.Show();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Будь ласка, заповніть всі поля для введення інтервалів та точності.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Будь ласка, заповніть всі поля для введення інтервалів та точності.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Будь ласка, введіть коректні числові значення для інтервалів та точності.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("Будь ласка, введіть коректні числові значення для інтервалів та точності.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
+                ErrorManager.PrintError("Помилка! Принаймні одна функція містить менше 2 точок!");
             }
+
+
         }
 
 
