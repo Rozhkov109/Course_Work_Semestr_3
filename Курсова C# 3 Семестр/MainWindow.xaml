@@ -10,18 +10,19 @@
         <!-- Меню -->
         <Menu Height="19" VerticalAlignment="Top">
             <MenuItem Header="Файл">
-                <MenuItem Header="Завантажити з XML" />
+                <MenuItem Header="Завантажити з XML" Click="MenuItem_LoadFromXml_Click" />
                 <MenuItem Header="Зберегти дані в XML" />
+                <MenuItem Header="Створити звіт в PDF" />
             </MenuItem>
             <MenuItem Header="Про застосунок"/>
         </Menu>
 
 
         <!-- Таблица для F(X) -->
-        <DataGrid Name="FxDataGrid" AutoGenerateColumns="True" CanUserAddRows="True" Margin="10,166,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="248">
+        <DataGrid Name="FxDataGrid" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" Margin="10,166,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="248">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="X" Binding="{Binding X}" Width="100" />
-                <DataGridTextColumn Header="Y" Binding="{Binding Y}" Width="100" />
+                <DataGridTextColumn Header="X" Binding="{Binding X}" IsReadOnly="False" Width="100" />
+                <DataGridTextColumn Header="Y" Binding="{Binding Y}" IsReadOnly="False" Width="100"  />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Додати Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="38,427,0,0" Click="FxAddPoint_Click" RenderTransformOrigin="0.469,2.481"/>
@@ -29,14 +30,14 @@
         <TextBlock HorizontalAlignment="Left" Margin="96,136,0,0" VerticalAlignment="Top" Height="25" Width="34" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" RenderTransformOrigin="-0.251,0.61"><Run Text="F(x)"/><LineBreak/><Run/></TextBlock>
 
         <!-- Таблица для G(X) -->
-        <DataGrid Name="GxDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="265,166,0,0" Height="248">
+        <DataGrid Name="GxDataGrid" AutoGenerateColumns="False" IsReadOnly="False" CanUserAddRows="False" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="265,166,0,0" Height="248">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="X" Binding="{Binding X}" Width="100" />
-                <DataGridTextColumn Header="Y" Binding="{Binding Y}" Width="100" />
+                <DataGridTextColumn Header="X" Binding="{Binding X}" IsReadOnly="False" Width="100" />
+                <DataGridTextColumn Header="Y" Binding="{Binding Y}" IsReadOnly="False" Width="100" />
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Додати Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="293,427,0,0" Click="GxAddPoint_Click"/>
-        <Button Content="Видалити Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="293,470,0,0" Click="GxAddPoint_Click"/>
+        <Button Content="Видалити Точку" Width="150" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="293,470,0,0" Click="GxRemovePoint_Click"/>
         <TextBlock HorizontalAlignment="Left" Margin="348,136,0,0" VerticalAlignment="Top" Height="25" Width="40" TextAlignment="Center" TextWrapping="Wrap" FontSize="20" RenderTransformOrigin="-0.251,0.61"><Run Text="G(x)"/><LineBreak/><Run/></TextBlock>
 
         <!-- Поля для введення даних для обчислення -->

@@ -1,23 +1,40 @@
-﻿using System.Xml.Serialization;
+﻿using System.ComponentModel;
+using System.Xml.Serialization;
 
-public class Point : IFunctionComponent
+public class Point : IFunctionComponent, INotifyPropertyChanged
 {
-    [XmlElement("X")]
+
     private double x;
 
+    [XmlElement("X")]
     public double X
     { 
         get { return x; }
-        set { x = value; }
+        set
+        {
+            if (x != value)
+            {
+                x = value;
+                OnPropertyChanged(nameof(X));
+            }
+        }
     }
 
-    [XmlElement("Y")]
+
     private double y;
 
+    [XmlElement("Y")]
     public double Y
     { 
         get { return y; }
-        set { y = value; }
+        set
+        {
+            if (y != value)
+            {
+                y = value;
+                OnPropertyChanged(nameof(Y));
+            }
+        }
     }
 
     public Point() { }
@@ -30,5 +47,12 @@ public class Point : IFunctionComponent
 
     public string GetInfo()
     { return "X = " + X + "  Y = " + Y; }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }
 
