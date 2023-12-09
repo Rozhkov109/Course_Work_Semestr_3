@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using OxyPlot;
 using OxyPlot.Legends;
@@ -25,11 +26,28 @@ namespace CourseWork
 
             FunctionWithPointsCalculator calc = new FunctionWithPointsCalculator();
 
-            foreach (var point in Fx.PointsList)
-            { seriesFx.Points.Add(new DataPoint(point.X, calc.Interpolation(Fx, point.X, eps))); }
+            double maxPoints = Math.Max(Fx.PointsList.Count, Gx.PointsList.Count);
+            double step = 1.0 / (maxPoints * 100);
 
-            foreach (var point in Gx.PointsList)
-            { seriesGx.Points.Add(new DataPoint(point.X, calc.Interpolation(Gx, point.X, eps))); }
+            double minXFx = Fx.PointsList.Min(p => p.X);
+            double maxXFx = Fx.PointsList.Max(p => p.X);
+
+
+            double minXGx = Gx.PointsList.Min(p => p.X);
+            double maxXGx = Gx.PointsList.Max(p => p.X);
+
+
+            for (double x = minXFx; x <= maxXFx; x += step)
+            {
+                double interpolatedValueFx = calc.Interpolation(Fx, x, eps);
+                seriesFx.Points.Add(new DataPoint(x, interpolatedValueFx));
+            }
+
+            for (double x = minXGx; x <= maxXGx; x +=  step )
+            {
+                double interpolatedValueGx = calc.Interpolation(Gx, x, eps);
+                seriesGx.Points.Add(new DataPoint(x, interpolatedValueGx));
+            }
 
             for (int i = 0; i < Math.Min(seriesFx.Points.Count, seriesGx.Points.Count); i++)
             { seriesDiff.Points.Add(new DataPoint(seriesFx.Points[i].X, seriesFx.Points[i].Y - seriesGx.Points[i].Y)); }
