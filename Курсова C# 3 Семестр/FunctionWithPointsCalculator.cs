@@ -42,7 +42,7 @@ public class FunctionWithPointsCalculator : IFunctionCalculator<FunctionWithPoin
     /// <returns>Повертає максимальне значення F(x) - (Gx) на заданому інтервалі </returns>
     public double FindMaximum(double start, double end, FunctionWithPoints Fx, FunctionWithPoints Gx, double eps)
     {  
-        if(Fx.IsUnimodal && Gx.IsUnimodal) 
+        if(Fx.CheckUnimodal() && Gx.CheckUnimodal()) 
         {
             return Fx.FindMaximum(start, end, Fx, eps) - Gx.FindMaximum(start, end, Gx, eps);
         }

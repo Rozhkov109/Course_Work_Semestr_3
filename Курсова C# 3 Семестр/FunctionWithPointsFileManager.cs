@@ -9,20 +9,16 @@ using System;
 
 public class FunctionWithPointsFileManager : IFileManager<FunctionWithPoints>
 {
-    public void GeneratePDFReport(FunctionWithPoints F, FunctionWithPoints G, string pathToSave)
+    public void GeneratePDFReport(FunctionWithPoints F, FunctionWithPoints G, double start, double end, double eps, string pathToSave)
     {
-        // Создаем новый документ PDF
         PdfDocument document = new PdfDocument();
 
-        // Добавляем страницу
         PdfPage page = document.AddPage();
         XGraphics gfx = XGraphics.FromPdfPage(page);
 
-        // Определяем шрифт и форматирование текста
         XFont font = new XFont("Times New Roman", 14, XFontStyle.Bold);
         XTextFormatter formatter = new XTextFormatter(gfx);
 
-        // Рисуем информацию о двух функциях на странице
         XRect rect = new XRect(40, 100, 400, 400);
         gfx.DrawRectangle(XBrushes.White, rect);
 
@@ -30,7 +26,11 @@ public class FunctionWithPointsFileManager : IFileManager<FunctionWithPoints>
         formatter.DrawString("Звіт роботи у форматі PDF", font, XBrushes.Black, rect, XStringFormats.TopLeft);
         rect.Y += 100;
 
-        string functionInfo = "Функція F(x):\n" + F.GetInfo() + "\n\nФункція G(x):\n" + G.GetInfo();
+        FunctionWithPointsCalculator calculator = new FunctionWithPointsCalculator();
+        string functionInfo = "Функція F(x):\n" + F.GetInfo() + "\n\nФункція G(x):\n" + G.GetInfo() +
+            "\n\nПочаток інтервалу: " + start + "\nКінець інтервалу: " + end + "\nТочність обчислень: " + eps + 
+            "\nМаксимум фукнції F(x) - G(x) = " + calculator.FindMaximum(start,end,F,G,eps);
+
         formatter.DrawString(functionInfo, font, XBrushes.Black, rect, XStringFormats.TopLeft);
         rect.Y += 100;
         

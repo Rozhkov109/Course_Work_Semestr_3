@@ -13,5 +13,5 @@
     /// <summary>
     /// Генерація звіту у форматі PDF
     /// </summary>
-    void GeneratePDFReport(T F, T G, string pathToSave);
+    void GeneratePDFReport(T F, T G, double start, double end, double eps, string pathToSave);
 }

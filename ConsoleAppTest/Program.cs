@@ -7,21 +7,22 @@ class Program
     {
         ErrorManager.ErrorHandler = ErrorManager.ConsoleError; // Виведення помилки у консоль
         Console.OutputEncoding = Encoding.UTF8;
-        // 1
+
         FunctionWithPoints f = new FunctionWithPoints();
-        f.AddPointToEnd(1, 2);
-        f.AddPointToEnd(2, 3);
-        f.AddPointToEnd(3, 5);
-        f.AddPointToEnd(4, 7);
-
         FunctionWithPoints g = new FunctionWithPoints();
-        g.AddPointToEnd(1, 1);
-        g.AddPointToEnd(2, 2);
-        g.AddPointToEnd(3, 3);
-        g.AddPointToEnd(4, 4);
 
-        Console.WriteLine("Функція F: \n" + f.GetInfo());
-        Console.WriteLine("\nФункція G: \n" + g.GetInfo());
+        FunctionWithPointsFileManager fFileManager = new FunctionWithPointsFileManager();
+       (f,g) = fFileManager.DeserializeFunctionsFromXML("..\\..\\..\\TestFiles\\AllUnimodal_AllDecreasing.xml");
+
+        Console.WriteLine("Fx:" + f.GetInfo());
+        Console.WriteLine("\n\nGx:" + g.GetInfo());
+
+        FunctionWithPointsCalculator fCalculator = new FunctionWithPointsCalculator();
+        Console.WriteLine(fCalculator.FindMaximum(0, 4, f, g, 0.01));
+        FunctionWithPointsFileManager functionWithPointsFileManager = new FunctionWithPointsFileManager();
+       functionWithPointsFileManager.GeneratePDFReport(f, g, 0, 4, 0.01, "..\\..\\..\\TestFiles\\testapp.pdf");
+
+
     }
 }
 

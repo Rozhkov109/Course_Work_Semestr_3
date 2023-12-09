@@ -11,10 +11,10 @@
         <Menu Height="19" VerticalAlignment="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Завантажити з XML" Click="MenuItem_LoadFromXml_Click" />
-                <MenuItem Header="Зберегти дані в XML" />
-                <MenuItem Header="Створити звіт в PDF" />
+                <MenuItem Header="Зберегти дані в XML" Click="MenuItem_SaveToXml_Click" />
+                <MenuItem Header="Створити звіт в PDF" Click="MenuItem_GeneratePDF_Click"/>
             </MenuItem>
-            <MenuItem Header="Про застосунок"/>
+            <MenuItem Header="Про застосунок" Click="MenuItem_About_Click"/>
         </Menu>
 
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 public class ErrorManager
 {
@@ -30,8 +31,8 @@ public class ErrorManager
     }
 
     // Метод для графічного застосунку
-    public static string GetErrorMessage(string errorMessage)
+    public static void GetErrorMessage(string errorMessage)
     {
-        return errorMessage;
+        MessageBox.Show(errorMessage);
     }
 }
